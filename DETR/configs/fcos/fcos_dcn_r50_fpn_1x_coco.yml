@@ -1,0 +1,16 @@
+_BASE_: [
+  '../datasets/coco_detection.yml',
+  '../runtime.yml',
+  '_base_/fcos_r50_fpn.yml',
+  '_base_/optimizer_1x.yml',
+  '_base_/fcos_reader.yml',
+]
+
+weights: output/fcos_dcn_r50_fpn_1x_coco/model_final
+
+ResNet:
+  dcn_v2_stages: [1, 2, 3]
+
+FCOSHead:
+  fcos_feat:
+    use_dcn: True
