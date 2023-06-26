@@ -1,2 +1,2 @@
 # SA-Segment-Anything
-SA2 - vision multimodal AI
+SA2 - Vision-Oriented MultiModal AI
