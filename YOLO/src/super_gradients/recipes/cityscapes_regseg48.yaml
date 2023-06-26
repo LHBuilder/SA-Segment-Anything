@@ -1,0 +1,92 @@
+#  RegSeg segmentation training example with Cityscapes dataset.
+#  Reproduction of paper: Rethink Dilated Convolution for Real-time Semantic Segmentation.
+#
+
+# Instructions:
+#   0. Make sure that the data is stored in dataset_params.dataset_dir or add "dataset_params.data_dir=<PATH-TO-DATASET>" at the end of the command below (feel free to check ReadMe)
+#   1. Move to the project root (where you will find the ReadMe and src folder)
+#   2. Run the command:
+#       python -m super_gradients.train_from_recipe --config-name=cityscapes_regseg48
+#
+#
+#  Validation mIoU - Cityscapes, training time:
+#      RegSeg48:    input-size: [1024, 2048]     mIoU: 78.15  using 4 GeForce RTX 2080 Ti with DDP, ~2 minutes / epoch
+#
+#  Official git repo:
+#      https://github.com/RolandGao/RegSeg
+#  Paper:
+#      https://arxiv.org/pdf/2111.09957.pdf
+#
+#
+#  Logs, tensorboards and network checkpoints:
+#      s3://deci-pretrained-models/regseg48_cityscapes/
+#
+#
+#  Learning rate and batch size parameters, using 4 GeForce RTX 2080 Ti with DDP:
+#      RegSeg48:    input-size: [1024, 2048]     initial_lr: 0.02    batch-size: 4 * 4gpus = 16
+
+defaults:
+  - training_hyperparams: default_train_params
+  - dataset_params: cityscapes_regseg48_dataset_params
+  - checkpoint_params: default_checkpoint_params
+  - _self_
+  - variable_setup
+
+train_dataloader: cityscapes_train
+val_dataloader: cityscapes_val
+
+cityscapes_ignored_label: 19    # convenience parameter since it is used in many places in the YAML
+
+architecture: regseg48
+
+arch_params:
+  num_classes: 19
+  strict_load: no_key_matching
+
+load_checkpoint: False
+
+
+
+resume: False
+training_hyperparams:
+  sync_bn: True
+  resume: ${resume}
+  max_epochs: 800
+  lr_mode: poly
+  initial_lr: 0.02   # for effective batch_size=16
+  lr_warmup_epochs: 0
+  optimizer: SGD
+  optimizer_params:
+    momentum: 0.9
+    weight_decay: 5e-4
+
+  ema: True
+
+  loss: cross_entropy
+  criterion_params:
+    ignore_index: ${cityscapes_ignored_label}
+
+  train_metrics_list:
+    - PixelAccuracy:
+        ignore_label: ${cityscapes_ignored_label}
+    - IoU:
+        num_classes: 20
+        ignore_index: ${cityscapes_ignored_label}
+
+  valid_metrics_list:
+    - PixelAccuracy:
+        ignore_label: ${cityscapes_ignored_label}
+    - IoU:
+        num_classes: 20
+        ignore_index: ${cityscapes_ignored_label}
+
+  metric_to_watch: IoU
+  greater_metric_to_watch_is_better: True
+
+  _convert_: all
+
+project_name: RegSeg
+experiment_name: ${architecture}_cityscapes
+
+multi_gpu: AUTO
+num_gpus: 4

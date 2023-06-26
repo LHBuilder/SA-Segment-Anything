@@ -1,0 +1,24 @@
+# Cifar10 Classification Training:
+# Reaches ~94.9 Accuracy after 250 Epochs
+# Instructions:
+#   0. Make sure that the data is stored in dataset_params.dataset_dir or add "dataset_params.data_dir=<PATH-TO-DATASET>" at the end of the command below (feel free to check ReadMe)
+#   1. Move to the project root (where you will find the ReadMe and src folder)
+#   2. Run the command:
+#       python -m super_gradients.train_from_recipe --config-name=cifar10_resnet +experiment_name=cifar10
+#
+#   To use equivalent Albumentations transforms pipeline set dataset_params to cifar10_albumentations_dataset_params:
+#     python -m super_gradients.train_from_recipe --config-name=cifar10_resnet dataset_params=cifar10_albumentations_dataset_params
+defaults:
+  - training_hyperparams: cifar10_resnet_train_params
+  - dataset_params: cifar10_dataset_params
+  - arch_params: resnet18_cifar_arch_params
+  - checkpoint_params: default_checkpoint_params
+  - _self_
+  - variable_setup
+
+train_dataloader: cifar10_train
+val_dataloader: cifar10_val
+architecture: resnet18_cifar
+experiment_name: resnet18_cifar_interpolation_check
+multi_gpu: Off
+num_gpus: 1

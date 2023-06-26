@@ -1,0 +1,38 @@
+# Efficientnet-B0 Imagenet training
+# This example trains with effective batch size = 64 * 4 gpus = 256.
+# Epoch time on 4 X 3090Ti distributed training is ~ 16:25 minutes
+# Logs and tensorboards: s3://deci-pretrained-models/efficientnet_b0/
+# Instructions:
+#   0. Make sure that the data is stored in dataset_params.dataset_dir or add "dataset_params.data_dir=<PATH-TO-DATASET>" at the end of the command below (feel free to check ReadMe)
+#   1. Move to the project root (where you will find the ReadMe and src folder)
+#   2. Run the command:
+#       python -m super_gradients.train_from_recipe --config-name=imagenet_efficientnet
+
+defaults:
+  - training_hyperparams: imagenet_efficientnet_train_params
+  - dataset_params: imagenet_efficientnet_dataset_params
+  - arch_params: efficientnet_b0_arch_params
+  - checkpoint_params: default_checkpoint_params
+  - _self_
+  - variable_setup
+
+arch_params:
+  num_classes: 1000
+
+train_dataloader: imagenet_train
+val_dataloader: imagenet_val
+
+
+resume: False
+training_hyperparams:
+  resume: ${resume}
+
+experiment_name: efficientnet_b0_imagenet
+
+
+
+
+multi_gpu: DDP
+num_gpus: 4
+
+architecture: efficientnet_b0

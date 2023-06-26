@@ -1,0 +1,44 @@
+# Shelfnet34_lw recipe for COCO segmentation 21 classes from PASCAL.
+# Reaches ~65.1 mIOU
+# Trained using 4 X 2080 Ti using DDP- takes ~ 2d 7h with batch size of 8 and batch accumulate of 3 (i.e effective batch
+# size is 4*8*3 = 96)
+# Logs and tensorboards: s3://deci-pretrained-models/shelfnet34_coco_segmentation_tensorboard/
+
+
+# Instructions:
+#   0. Make sure that the data is stored in dataset_params.dataset_dir or add "dataset_params.data_dir=<PATH-TO-DATASET>" at the end of the command below (feel free to check ReadMe)
+#   1. Move to the project root (where you will find the ReadMe and src folder)
+#   2. Run the command:
+#       python -m super_gradients.train_from_recipe --config-name=coco_segmentation_shelfnet_lw
+
+
+# /!\ THIS RECIPE IS NOT SUPPORTED AT THE MOMENT /!\
+
+defaults:
+  - training_hyperparams: coco_segmentation_shelfnet_lw_train_params
+  - dataset_params: coco_segmentation_dataset_params
+  - arch_params: shelfnet34_lw_arch_params
+  - checkpoint_params: default_checkpoint_params
+  - _self_
+  - variable_setup
+
+train_dataloader: coco_segmentation_train
+val_dataloader: coco_segmentation_val
+
+checkpoint_params:
+  strict_load: True
+  load_backbone: False
+  checkpoint_path:
+
+resume: False
+training_hyperparams:
+  resume: ${resume}
+
+experiment_name: coco_segmentation_21_subclass_shelfnet34
+
+multi_gpu: DDP
+num_gpus: 4
+
+
+
+architecture: shelfnet34_lw

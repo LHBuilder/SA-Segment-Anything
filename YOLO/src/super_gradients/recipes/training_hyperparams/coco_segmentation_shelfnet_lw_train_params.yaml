@@ -1,0 +1,26 @@
+defaults:
+  - default_train_params
+
+max_epochs: 150
+initial_lr: 5e-3
+loss: shelfnet_ohem_loss
+optimizer: SGD
+mixed_precision: True
+batch_accumulate: 3
+lr_mode: poly
+optimizer_params:
+  momentum: 0.9
+  weight_decay: 1e-4
+  nesterov: False
+load_opt_params: False
+train_metrics_list:
+  - PixelAccuracy
+  - IoU:
+      num_classes: 21
+valid_metrics_list:
+  - PixelAccuracy
+  - IoU:
+      num_classes: 21
+
+metric_to_watch: IoU
+greater_metric_to_watch_is_better: True
