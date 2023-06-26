@@ -1,3 +1,9 @@
+# Copyright (c) 2023 SA Authors.
+# All rights reserved.
+
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
 from segment_anything import sam_model_registry, SamPredictor
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 from super_gradients.training import yolon
