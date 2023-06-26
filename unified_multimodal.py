@@ -6,7 +6,7 @@
 
 from segment_anything import sam_model_registry, SamPredictor
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
-from super_gradients.training import yolon
+from super_gradients.training import models as yolon
 from typing import Any, Dict, List, Optional, Tuple
 import cv2
 
@@ -20,7 +20,7 @@ class UniMultiModalFramework:
             yolo_model, # "yolo_nas_l"
             yolo_pretrained_weights, # "coco"
             yolo_conf_threshold, # 0.25
-            device, # "cuda"
+            device: str = "cuda",
             name: str = 'ummf',
         ) -> None:
         self._name = name
@@ -49,8 +49,11 @@ class UniMultiModalFramework:
     def sa_yolo_detect(
             self,
             image_path: str,
+            conf_threshold: int = None,
         ) -> Any:
-        model = yolon.get(self._yolo_model, pretrained_wrights=self._yolo_pretrained_weights) 
-        detection = model.predict(image_path, conf=self._conf_threshold)
+        model = yolon.get(self._yolo_model, pretrained_wrights=self._yolo_pretrained_weights)
+        if conf_threshold is None:
+            conf_threshold = self._conf_threshold
+        detection = model.predict(image_path, conf=conf_threshold)
         return detection
 
