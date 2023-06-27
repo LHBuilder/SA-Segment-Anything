@@ -2,7 +2,7 @@
 ## SA2: Vision-Oriented MultiModal AI
 
 
-SA2 integrates SOTA (state-of-the-art) models and provides a vision-oriented multi-model framework. It's not an LLM, but comprises multiple large-scale models, some of which are built on top of cutting-edge foundation models.
+SA2 integrates SOTA (state-of-the-art) models and provides a vision-oriented multi-modal framework. It's not an LLM (large-language model), but comprises multiple large-scale models, some of which are built on top of cutting-edge foundation models.
 
 ## Purposes
 
