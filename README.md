@@ -7,7 +7,7 @@ SA2 integrates SOTA (state-of-the-art) models and provides a vision-oriented mul
 ## Purposes
 The surging momentum of generative AI (GAI) heralds the dawn of a new era in Artificial General Intelligence (AGI). LLMs and CV multi-modal large-scale models are two dominant trends in the GAI age. ChatGPT and GPT-4 set a ceiling bar for LLMs, but CV multi-modal large-scale models are still emerging.
 
-Seeking AI is an AI company focused on AI for Industry. We have built a solid foundation for AI innovation and standardized data development over the past 5 years. We roll out SA2 for helping the community of CV multi-modal large-scale models. This SA2 project has the following purposes:
+Seeking AI is an AI company focusing on AI for Industry. We have built a solid foundation for AI innovation and standardized data development over the past 5 years. We roll out SA2 to help the community of CV multi-modal large-scale models. This SA2 project has the following purposes:
 
 1. Provide a unified multi-modal framework for different applications based on multi-modal foundation models.
 2. Integrate the SOTA vision models to build up a complete multi-modal platform by leveraging the real SOTA part of these models.
