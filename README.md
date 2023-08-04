@@ -1,4 +1,6 @@
-# Seeking AI Segment Anything (SA2)
+![](./public/SA2_logo.png)
+
+
 ## SA2: Vision-Oriented MultiModal AI
 
 
