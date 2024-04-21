@@ -16,7 +16,7 @@ We have built a solid foundation for AI innovation and standardized data develop
 
 The code requires `python>=3.8`, as well as `pytorch>=1.7` and `torchvision>=0.8`. Please follow the instructions [here](https://pytorch.org/get-started/locally/) to install both PyTorch and TorchVision dependencies. Installing both PyTorch and TorchVision with CUDA support is strongly recommended.
 
-### SA2 Unified MultiModel Framework (UMMF)
+### Unified MultiModel Framework (UMMF)
 
 ```bash
 git clone git@github.com:LHBuilder/SA-Segment-Anything.git
